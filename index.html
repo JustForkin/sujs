@@ -64,8 +64,6 @@
 
 	function uploadData(key_url, encrypted_data) {
 		console.log('going to upload...' + encrypted_data);
-		var form_data = new FormData();
-		form_data.append("file", encrypted_data);
 		$.ajax({
         url: 'upload.php',  //Server script to process data
         type: 'POST',
@@ -80,10 +78,10 @@
         success: function(evt) { uploadDone(evt, key_url) },
         error: uploadError,
         // Form data
-        data: form_data,
+        data: encrypted_data,
         //Options to tell jQuery not to process data or worry about content-type.
         cache: false,
-        contentType: "multipart/form-data",
+        contentType: false,
         processData: false
     });
 
