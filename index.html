@@ -55,7 +55,8 @@
 
 	function downloadDone(evt) {
 		var key = atob(document.location.hash.substr(1));
-		foo = evt;
+		decrypted_data = sjcl.decrypt(key, evt);
+		foo = decrypted_data;
 	}
 
 	function downloadError(evt) {
