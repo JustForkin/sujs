@@ -78,7 +78,7 @@ function handleFileSelect(evt) {
 }
 
 function uploadDone(evt, key_url) {
-    url = document.location + foo.trim() + '/#' + key_url;
+    url = document.location + evt.trim() + '/#' + key_url;
     $('#url').html(url);
     $('#url')[0].href = url;
 }
