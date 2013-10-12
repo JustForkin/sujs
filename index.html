@@ -56,6 +56,9 @@
 	function uploadDone(evt, key_url) {
 		foo = evt;
 		console.log('done: #' + key_url);
+		url = document.location + foo.trim() + '/#' + key_url;
+		$('#url').html(url);
+		$('#url').href(url);
 	}
 
 	function uploadError(evt) {
@@ -118,5 +121,6 @@
 <div id="inputs" class="clearfix">
     <input type="file" id="file">
 </div>
+<h3><a href="#" id="url"></a></h3>
 
 </body></html>
