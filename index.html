@@ -43,6 +43,7 @@
 		var reader = new FileReader();
 		reader.readAsText(file);
 		reader.onload = encryptFile;
+		console.log('got a file');
     }
 
 	function progressHandlingFunction(e){
