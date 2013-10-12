@@ -1,6 +1,6 @@
 <?php
 
-$data_dir = "/abby/hobocomp/sujs/files/";
+$data_dir = "./files/";
 
 // Who knows how vulnerable this is!!
 $data = file_get_contents("php://input");
