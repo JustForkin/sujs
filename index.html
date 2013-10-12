@@ -58,7 +58,7 @@
 		decrypted_data = sjcl.decrypt(key, evt);
 		foo = decrypted_data;
 		data_url = 'data:text/plain;base64,' + btoa(decrypted_data);
-		document.location = data_url;
+		//document.location = data_url;
 	}
 
 	function downloadError(evt) {
@@ -119,8 +119,10 @@
 
 	}
 
+	var foob;
 	function encryptFile(evt) {
 		var data = evt.target.result;
+		foob = data;
 		// Generate key
 		var key = new Uint8Array(32);	// Sure, 128-byte for a 256-bit key...
 
