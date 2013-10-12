@@ -6,6 +6,7 @@ RewriteEngine On
 
 RewriteCond %{HTTP_HOST} hobocomp.com
 RewriteCond %{REQUEST_URI} !^/sujs/download.php(.*)$
+RewriteCond %{REQUEST_URI} !^/sujs/upload.php(.*)$
 RewriteRule ^(.*)$ index.html [L,QSA]
 
 */
