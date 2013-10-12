@@ -55,7 +55,7 @@ function downloadDone(evt) {
     decrypted_data = sjcl.decrypt(key, encrypted_data);
 
     // Build data blob
-    blob = new Blob(decrypted_data, {type: app_type});
+    blob = new Blob([decrypted_data], {type: app_type});
 
     $('#progress').html('Done!');
 
