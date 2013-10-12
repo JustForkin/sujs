@@ -9,7 +9,13 @@
         if (isAPIAvailable()) {
             $('#file').bind('change', handleFileSelect);
         }
-    });
+
+		// Are we needing a file today?
+		if (document.location.hash != "") {
+			// Yes!
+			downloadFile();
+		}
+	});
 
     function isAPIAvailable() {
         // Check for the various File API support.
@@ -33,6 +39,28 @@
             return false;
         }
     }
+
+	function downloadFile() {
+		var path_split = document.location.pathname.split('/')
+		var fname = path_split[path_split.length - 2];
+
+
+		$.ajax({
+			url: 'download.php?fname=' + fname,
+			type: 'GET',
+			success: downloadDone,
+			error: downloadError,
+		});
+	}
+
+	function downloadDone(evt) {
+		var key = atob(document.location.hash.substr(1));
+		foo = evt;
+	}
+
+	function downloadError(evt) {
+		console.log('Error download');
+	}
 
     function handleFileSelect(evt) {
         var file = evt.target.files[0];
