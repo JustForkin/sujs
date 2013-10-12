@@ -52,8 +52,10 @@
 		}
 	}
 
+	var foo;
 	function uploadDone(evt, key_url) {
-		console.log('done' + evt);
+		foo = evt;
+		console.log('done');
 	}
 
 	function uploadError(evt) {
