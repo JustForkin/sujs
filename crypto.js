@@ -45,10 +45,13 @@ function downloadFile() {
 function downloadDone(evt) {
     var key = atob(document.location.hash.substr(1));
     $('#progress').html('Decrypting...');
-    console.log(evt);
-    decrypted_data = sjcl.decrypt(key, evt);
-    foo = decrypted_data;
-    app_type = 'text/plain';
+    encrypted_obj = $.parseJSON(evt);
+    app_type = encrypted_obj.file_type
+    delete encrypted_obj["file_type"];
+    encrypted_data = JSON.stringify(encrypted_obj);
+    console.log(encrypted_data);
+    decrypted_data = sjcl.decrypt(key, encrypted_data);
+    //app_type = 'text/plain';
     data_url = 'data:' + app_type + ';base64,' + btoa(decrypted_data);
     $('#progress').html('Done!');
 
@@ -81,6 +84,7 @@ function handleFileSelect(evt) {
 
 function uploadDone(evt, key_url) {
     url = document.location + evt.trim() + '/#' + key_url;
+    $('#progress').html('Done');
     $('#url').html(url);
     $('#url')[0].href = url;
 }
@@ -114,6 +118,7 @@ function encryptFile(evt, file_type) {
 
     encrypted_data_obj = $.parseJSON(encrypted_data);
     encrypted_data_obj.file_type = file_type;
+    console.log('file type: ' + file_type);
     encrypted_data = JSON.stringify(encrypted_data_obj);
 
     $('#progress').html('Uploading file...');
