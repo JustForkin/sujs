@@ -114,7 +114,7 @@ function encryptFile(evt, file_type) {
     encrypted_data_obj.file_type = file_type;
     encrypted_data = JSON.stringify(encrypted_data_obj);
 
-    #('#progress').html('Uploading file...');
+    $('#progress').html('Uploading file...');
     // Upload encrypted file, and provide url
     uploadData(key_url, encrypted_data);
 }
