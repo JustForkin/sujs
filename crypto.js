@@ -32,6 +32,7 @@ function downloadFile() {
     var path_split = document.location.pathname.split('/')
     var fname = path_split[path_split.length - 2];
 
+    $('#progress').html('Downloading file...');
     $.ajax({
         url: '/sujs/download.php?fname=' + fname,
         type: 'GET',
@@ -44,6 +45,7 @@ function downloadFile() {
 function downloadDone(evt) {
     var key = atob(document.location.hash.substr(1));
     $('#progress').html('Decrypting...');
+    console.log(evt);
     decrypted_data = sjcl.decrypt(key, evt);
     foo = decrypted_data;
     app_type = 'text/plain';
