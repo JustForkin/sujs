@@ -61,7 +61,7 @@ function downloadDone(evt) {
 
     // Allow user to download
     $('#url').html('Download \'' + fname + "'");
-    $('#url').addEventListener('download', function() { saveAs(blob, fname); }, false);
+    $('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
 }
 
 function downloadError(evt) {
