@@ -135,7 +135,7 @@
 
 		var key_url = btoa(key_str);	// put this after the # in the url
 
-		encrypted_data = sjcl.encrypt(key_str, btoa(data));
+		encrypted_data = sjcl.encrypt(key_str, data);
 
 		// upload it, and then give 'em the url!
 		uploadData(key_url, encrypted_data);
