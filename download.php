@@ -5,16 +5,16 @@
 RewriteEngine On
 
 RewriteCond %{HTTP_HOST} hobocomp.com
-RewriteCond %{REQUEST_URI} !^/sujs/$
-RewriteRule ^(.*)$ download.php?fname=$1 [L,QSA]
+RewriteCond %{REQUEST_URI} !^/sujs/download.php(.*)$
+RewriteRule ^(.*)$ index.html [L,QSA]
+
 */
 
 $data_dir = "./files/";
 
-
 $fname = preg_replace("/[^a-zA-Z0-9_-]+/", "", $_GET["fname"]);
 
-echo $fname
+echo file_get_contents("$data_dir/$fname");
 
 
 ?>
