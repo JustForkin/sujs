@@ -86,7 +86,6 @@
 	var foo;
 	function uploadDone(evt, key_url) {
 		foo = evt;
-		console.log('done: #' + key_url);
 		url = document.location + foo.trim() + '/#' + key_url;
 		$('#url').html(url);
 		$('#url')[0].href = url;
@@ -97,7 +96,6 @@
 	}
 
 	function uploadData(key_url, encrypted_data) {
-		console.log('going to upload...' + encrypted_data);
 		$.ajax({
         url: 'upload.php',  //Server script to process data
         type: 'POST',
