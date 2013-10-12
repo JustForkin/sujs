@@ -63,7 +63,7 @@
 	}
 
 	function uploadData(key_url, encrypted_data) {
-		console.log('going to upload...' + btoa(encrypted_data));
+		console.log('going to upload...' + encrypted_data);
 		$.ajax({
         url: 'upload.php',  //Server script to process data
         type: 'POST',
