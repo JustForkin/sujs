@@ -89,8 +89,7 @@
 		console.log('done: #' + key_url);
 		url = document.location + foo.trim() + '/#' + key_url;
 		$('#url').html(url);
-		$('#url')[0].href(url);
-		foo = $('#url');
+		$('#url')[0].href = url;
 	}
 
 	function uploadError(evt) {
