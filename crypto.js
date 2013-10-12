@@ -8,7 +8,6 @@ $(document).ready(function () {
     // If the URL contains a #, we will assume the user is
     // looking to download.
     if (document.location.hash != "") {
-        // Yes!
         downloadFile();
     }
 });
@@ -71,6 +70,7 @@ function handleFileSelect(evt) {
     // file.type
     // file.size
 
+    $('#progress').html('Reading file...');
     var reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = function (evt) { encryptFile(evt, file.type) };
@@ -97,6 +97,7 @@ function encryptFile(evt, file_type) {
         data += String.fromCharCode(array_data[i]);
     }
 
+    $('#progress').html('Generating key...');
     // Generate 128-bit key
     var key = new Uint8Array(16);
     // What could possibly go wrong here!?!
