@@ -11,6 +11,7 @@ else
   //echo "Stored in: " . $_FILES["file"]["tmp_name"];
 
 	echo $_FILES["file"]["tmp_name"];
+	print_r($_FILES);
   }
 ?>
 
