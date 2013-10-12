@@ -101,7 +101,7 @@
 			key_str += String.fromCharCode(key[i]);
 		}
 
-		var key_url = escape(key_str);	// put this after the # in the url
+		var key_url = btoa(key_str);	// put this after the # in the url
 
 		encrypted_data = sjcl.encrypt(key_str, data);
 
