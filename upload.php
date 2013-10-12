@@ -6,10 +6,15 @@ $data_dir = "/abby/hobocomp/sujs/files/";
 $data = file_get_contents("php://input");
 
 
-$filename = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 12);
+
+do {
+	$filename = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-"), 0, 12);
+while (file_exists("$data_dir/$filename"));
 
 file_put_contents("$data_dir/$filename", $data);
 
 echo $filename;
+
+
 ?>
 
