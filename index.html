@@ -58,7 +58,7 @@
 		decrypted_data = sjcl.decrypt(key, evt);
 		foo = decrypted_data;
 		data_url = 'data:text/plain;base64,' + btoa(decrypted_data);
-		//document.location = data_url;
+		document.location = data_url;
 	}
 
 	function downloadError(evt) {
