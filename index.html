@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//crypto.stanford.edu/sjcl/sjcl.js"></script>
+<style type="text/css"></style>
+<script>
+    $(document).ready(function () {
+        if (isAPIAvailable()) {
+            $('#file').bind('change', handleFileSelect);
+        }
+    });
+
+    function isAPIAvailable() {
+        // Check for the various File API support.
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            // Great success! All the File APIs are supported.
+            return true;
+        } else {
+            // source: File API availability - http://caniuse.com/#feat=fileapi
+            // source: <output> availability - http://html5doctor.com/the-output-element/
+            document.writeln('The HTML5 APIs used in this form are only available in the following browsers:<br />');
+            // 6.0 File API & 13.0 <output>
+            document.writeln(' - Google Chrome: 13.0 or later<br />');
+            // 3.6 File API & 6.0 <output>
+            document.writeln(' - Mozilla Firefox: 6.0 or later<br />');
+            // 10.0 File API & 10.0 <output>
+            document.writeln(' - Internet Explorer: Not supported (partial support expected in 10.0)<br />');
+            // ? File API & 5.1 <output>
+            document.writeln(' - Safari: Not supported<br />');
+            // ? File API & 9.2 <output>
+            document.writeln(' - Opera: Not supported');
+            return false;
+        }
+    }
+
+    function handleFileSelect(evt) {
+        var file = evt.target.files[0];
+
+		// file.type
+		// file.size
+
+		var reader = new FileReader();
+		reader.readAsText(file);
+		reader.onload = encryptFile;
+    }
+
+	function progressHandlingFunction(e){
+		if(e.lengthComputable){
+			$('progress').attr({value:e.loaded,max:e.total});
+		}
+	}
+
+	function uploadDone(evt, key_url) {
+		console.log('done' + evt);
+	}
+
+	function uploadError(evt) {
+		console.log('error' + evt);
+	}
+
+	function uploadData(key_url, encrypted_data) {
+		$.ajax({
+        url: 'upload.php',  //Server script to process data
+        type: 'POST',
+        xhr: function() {  // Custom XMLHttpRequest
+            var myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload) { // Check if upload property exists
+                myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
+            }
+            return myXhr;
+        },
+        //Ajax events
+        success: function(evt) { uploadDone(evt, key_url) },
+        error: uploadError,
+        // Form data
+        data: encrypted_data,
+        //Options to tell jQuery not to process data or worry about content-type.
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
+	function encryptFile(evt) {
+		var data = evt.target.result;
+		// Generate key
+		var key = new Uint8Array(128);	// Sure, 128-byte for a 256-bit key...
+
+		// What could possibly go wrong here!?!
+		window.crypto.getRandomValues(key);
+
+		// Put it in a string
+		var key_str = ""
+		for (var i=0; i<key.length; i++) {
+			key_str += String.fromCharCode(key[i]);
+		}
+
+		var key_url = escape(key_str);	// put this after the # in the url
+
+		encrypted_data = sjcl.encrypt(key_str, data);
+
+		// upload it, and then give 'em the url!
+		uploadData(key_url, encrypted_data);
+	}
+
+
+</script>
+</head>
+
+<body>
+<div id="inputs" class="clearfix">
+    <input type="file" id="file">
+</div>
+<hr>
+<h3 id="matches-label">0 matches</h3>
+<output id="matches">
+</output>
+
+</body></html>
