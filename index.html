@@ -90,7 +90,7 @@
 	function encryptFile(evt) {
 		var data = evt.target.result;
 		// Generate key
-		var key = new Uint8Array(128);	// Sure, 128-byte for a 256-bit key...
+		var key = new Uint8Array(32);	// Sure, 128-byte for a 256-bit key...
 
 		// What could possibly go wrong here!?!
 		window.crypto.getRandomValues(key);
