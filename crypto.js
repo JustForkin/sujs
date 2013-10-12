@@ -47,17 +47,21 @@ function downloadDone(evt) {
     $('#progress').html('Decrypting...');
     encrypted_obj = $.parseJSON(evt);
     app_type = encrypted_obj.file_type
+    fname = encrypted_obj.file_name;
     delete encrypted_obj["file_type"];
+    delete encrypted_obj["file_name"];
     encrypted_data = JSON.stringify(encrypted_obj);
     console.log(encrypted_data);
     decrypted_data = sjcl.decrypt(key, encrypted_data);
-    //app_type = 'text/plain';
-    data_url = 'data:' + app_type + ';base64,' + btoa(decrypted_data);
+
+    // Build data blob
+    blob = new Blob(decrypted_data, {type: app_type});
+
     $('#progress').html('Done!');
 
     // Allow user to download
-    $('#url').html('Click here to download');
-    $('#url')[0].href = data_url;
+    $('#url').html('Download \'' + fname + "'");
+    $('#url').addEventListener('download', function() { saveAs(blob, fname); }, false);
 }
 
 function downloadError(evt) {
@@ -72,13 +76,14 @@ function downloadError(evt) {
 function handleFileSelect(evt) {
     var file = evt.target.files[0];
 
+    console.log(file);
     // file.type
     // file.size
 
     $('#progress').html('Reading file...');
     var reader = new FileReader();
     reader.readAsArrayBuffer(file);
-    reader.onload = function (evt) { encryptFile(evt, file.type) };
+    reader.onload = function (evt) { encryptFile(evt, file) };
     console.log('got a file');
 }
 
@@ -93,7 +98,7 @@ function uploadError(evt) {
     console.log('error' + evt);
 }
 
-function encryptFile(evt, file_type) {
+function encryptFile(evt, file) {
 
     // Convert array buf to string
     // Cannot use fromCharCode.apply here; large files fail
@@ -117,8 +122,10 @@ function encryptFile(evt, file_type) {
     encrypted_data = sjcl.encrypt(key_str, data);
 
     encrypted_data_obj = $.parseJSON(encrypted_data);
-    encrypted_data_obj.file_type = file_type;
-    console.log('file type: ' + file_type);
+    encrypted_data_obj.file_type = file.type;
+    encrypted_data_obj.file_name = file.name;
+    console.log('file type: ' + file.type);
+    console.log('file name: ' + file.name);
     encrypted_data = JSON.stringify(encrypted_data_obj);
 
     $('#progress').html('Uploading file...');
