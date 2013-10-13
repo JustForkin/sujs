@@ -49,7 +49,7 @@ div#container {
 }
 
 #error {
-    font-color: #c00;
+    color: #c00;
     font-weight: bold;
 }
 
