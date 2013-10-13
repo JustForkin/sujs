@@ -51,11 +51,11 @@ function downloadDone(evt) {
     delete encrypted_obj["file_type"];
     delete encrypted_obj["file_name"];
     encrypted_data = JSON.stringify(encrypted_obj);
-    console.log(encrypted_data);
     decrypted_data = sjcl.decrypt(key, encrypted_data);
 
     // Build data blob
-    blob = new Blob([decrypted_data], {type: app_type});
+    blob = new Blob([decrypted_data], {type: app_type + ";charset=utf-8"});
+    console.log('len: ' + blob.size);
     console.log('decrypt: ' + btoa(decrypted_data.substr(1, 10)));
 
     $('#progress').html('Done!');
