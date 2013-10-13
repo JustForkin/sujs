@@ -56,12 +56,14 @@ function downloadDone(evt) {
 
     // Build data blob
     blob = new Blob([decrypted_data], {type: app_type});
+    console.log('decrypt: ' + btoa(decrypted_data.substr(1, 10)));
 
     $('#progress').html('Done!');
 
     // Allow user to download
     $('#url').html('Download \'' + fname + "'");
     $('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
+    
     saveAs(blob, fname);
 }
 
@@ -120,6 +122,7 @@ function encryptFile(evt, file) {
     var key_url = btoa(key_str);
 
     // Encrypt - this returns a json string
+    console.log('encrypt: ' + btoa(data.substr(1, 10)));
     encrypted_data = sjcl.encrypt(key_str, data);
 
     encrypted_data_obj = $.parseJSON(encrypted_data);
