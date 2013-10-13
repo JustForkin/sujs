@@ -64,7 +64,8 @@ function downloadDone(evt) {
     $('#url').html('Download \'' + fname + "'");
     $('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
     
-    saveAs(blob, fname);
+    //saveAs(blob, fname);
+    window.open("data:" + app_type + ";charset=utf-8;base64,"+btoa(decrypted_data),fname);
 }
 
 function downloadError(evt) {
