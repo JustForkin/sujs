@@ -12,8 +12,8 @@
 
 <body>
   <div id="container">
+    <h3>Client-side encryption</h3>
     <div id="upload">
-      <h3>gimme a file</h3>
       <div id="inputs" class="clearfix">
         <input type="file" id="file">
         
@@ -30,7 +30,24 @@
 
     <div class="progress">
       <div id="progress"></div>
-      <progress></progress>
+      <progress class="progressbar"></progress>
+    </div>
+
+    <div id="upload-info" class="info">
+      Before uploading a file, this page will use Javascript
+      to generate a key and encrypt the file. Then, it will
+      give you a link that can be used to access the file,
+      containing the encrypted file location, and the key to
+      decrypt it.<br/><br/>Note that the key is never sent
+      to the server, even when downloading the file!
+    </div>
+    <div id="download-info" class="info">
+      This link is to an encrypted file stored on our server.
+      The key to decrypt this file is in the URL (after the <b>#</b>),
+      and is not sent to the server. This page will download
+      the encrypted file, use the key in the URL to decrypt it,
+      and save the decrypted file to your computer.<br/><br/>
+      <a href="/sujs/">Upload a file</a>
     </div>
   </div>
 

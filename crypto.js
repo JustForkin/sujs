@@ -8,8 +8,11 @@ $(document).ready(function () {
     // If the URL contains a #, we will assume the user is
     // looking to download.
     if (document.location.hash != "") {
-        $('#upload').style = "display: none";
+        $('#upload')[0].style.display = "none";
+        $('#download-info')[0].style.display = "block";
         downloadFile();
+    } else {
+        $('#upload-info')[0].style.display = "block";
     }
 });
 
@@ -66,8 +69,8 @@ function downloadDone(evt) {
     $('#progress').html('Done!');
 
     // Allow user to download
-    $('#url').html('Download \'' + fname + "'");
-    $('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
+    //$('#url').html('Download \'' + fname + "'");
+    //$('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
     
     saveAs(blob, fname);
     //window.open("data:" + app_type + ";charset=us-ascii;base64,"+btoa(decrypted_data),fname);
@@ -99,6 +102,7 @@ function handleFileSelect(evt) {
 function uploadDone(evt, key_url) {
     url = document.location + evt.trim() + '/#' + key_url;
     $('#progress').html('Done');
+    $('.progressbar')[0].style.display = "none";
     $('#url').html(url);
     $('#url')[0].href = url;
 }
@@ -145,6 +149,8 @@ function encryptFile(evt, file) {
 
 
 function uploadData(key_url, encrypted_data) {
+
+    $('.progressbar')[0].style.display = "inline";
 
     // Make ajax request to upload.php
     $.ajax({
