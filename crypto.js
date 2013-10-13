@@ -58,7 +58,7 @@ function downloadDone(evt) {
     for (var i=0; i<decrypted_data.length; i++) {
         binary_data[i] = decrypted_data.charCodeAt(i) & 0xff;
     }
-    blob = new Blob(binary_data, {type: app_type});
+    blob = new Blob([binary_data.buffer], {type: app_type});
     console.log('len: ' + blob.size);
     console.log('decrypt: ' + btoa(decrypted_data.substr(1, 10)));
 
