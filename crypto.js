@@ -54,7 +54,7 @@ function downloadDone(evt) {
     decrypted_data = sjcl.decrypt(key, encrypted_data);
 
     // Build data blob
-    blob = new Blob([decrypted_data], {type: app_type + ";charset=utf-8"});
+    blob = new Blob([decrypted_data], {type: app_type + ";charset=us-ascii"});
     console.log('len: ' + blob.size);
     console.log('decrypt: ' + btoa(decrypted_data.substr(1, 10)));
 
@@ -64,8 +64,8 @@ function downloadDone(evt) {
     $('#url').html('Download \'' + fname + "'");
     $('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
     
-    //saveAs(blob, fname);
-    window.open("data:" + app_type + ";charset=us-ascii;base64,"+btoa(decrypted_data),fname);
+    saveAs(blob, fname);
+    //window.open("data:" + app_type + ";charset=us-ascii;base64,"+btoa(decrypted_data),fname);
 }
 
 function downloadError(evt) {
