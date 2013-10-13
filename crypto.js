@@ -55,7 +55,14 @@ function downloadDone(evt) {
     delete encrypted_obj["file_type"];
     delete encrypted_obj["file_name"];
     encrypted_data = JSON.stringify(encrypted_obj);
+    try {
     decrypted_data = sjcl.decrypt(key, encrypted_data);
+    } catch (err) {
+        $('#progress').html('');
+        $('#error').html('Error: could not decrypt data. Do you have the right key?');
+        console.log(err);
+        return;
+    }
 
     // Build data blob
     var binary_data = new Uint8Array(decrypted_data.length);
@@ -71,7 +78,6 @@ function downloadDone(evt) {
     // Allow user to download
     //$('#url').html('Download \'' + fname + "'");
     //$('#url')[0].addEventListener('download', function() { saveAs(blob, fname); }, false);
-    
     saveAs(blob, fname);
     //window.open("data:" + app_type + ";charset=us-ascii;base64,"+btoa(decrypted_data),fname);
 }

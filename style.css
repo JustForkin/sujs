@@ -48,6 +48,11 @@ div#container {
     display: none;
 }
 
+#error {
+    font-color: #c00;
+    font-weight: bold;
+}
+
 .info {
     background-color: #cce;
     border: 1px solid #333;
