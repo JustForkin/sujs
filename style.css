@@ -3,3 +3,9 @@
 div #url {
     text-size: 18pt;
 }
+
+#container {
+    width: 300px;
+    margin: auto;
+    border: 1px #ccc;
+}
