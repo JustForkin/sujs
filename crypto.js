@@ -54,7 +54,11 @@ function downloadDone(evt) {
     decrypted_data = sjcl.decrypt(key, encrypted_data);
 
     // Build data blob
-    blob = new Blob([decrypted_data], {type: app_type + ";charset=x-user-defined"});
+    var binary_data = new Uint8Array(decrypted_data.length);
+    for (var i=0; i<decrypted_data.length; i++) {
+        binary_data[i] = decrypted_data.charCodeAt(i) & 0xff;
+    }
+    blob = new Blob(binary_data, {type: app_type});
     console.log('len: ' + blob.size);
     console.log('decrypt: ' + btoa(decrypted_data.substr(1, 10)));
 
