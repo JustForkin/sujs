@@ -8,6 +8,7 @@ $(document).ready(function () {
     // If the URL contains a #, we will assume the user is
     // looking to download.
     if (document.location.hash != "") {
+        $('#upload').style = "display: none";
         downloadFile();
     }
 });
